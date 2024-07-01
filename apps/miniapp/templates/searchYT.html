@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+    <div class="m-3">
+        <h2>YouTubeコメント分析</h2>
+    </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+    <p>動画URL https://www.youtube.com/watch?v=(video_id)のvideo_idを入力してください</p>
+    <form action="{{ url_for('predictYT') }}" method="POST">
+        <div>
+            <input type="text" name="video_id" placeholder="video_idを入力">
+            <input id="btn" class="btn btn-primary" type="submit" value="分析">
+        </div>
+    </form>
+    <div id="loading" class="position-absolute top-0 start-0 w-100 h-100 d-none">
+        <div class="text-center position-absolute top-50 start-50 w-100 translate-middle">
+            <div class="spinner-border text-primary" style="width: 10vw; height: 10vw;" role="status">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+      </div>
+      
+      <script>
+        btn = document.getElementById('btn')
+        btn.addEventListener('click', function() {
+            show_loading();
+        });
+      
+        function show_loading() {
+            console.log('Showing loading spinner');
+            document.getElementById('loading').classList.remove('d-none');
+            document.documentElement.style.overflow = 'hidden';
+        }
+      
+        function hide_loading() {
+            console.log('Hiding loading spinner');
+            document.getElementById('loading').classList.add('d-none');
+            document.documentElement.style.overflow = '';
+        }
+      </script>
+    {% endblock %}
+</body>
+</html>
