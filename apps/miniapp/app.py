@@ -79,3 +79,6 @@ def predictYT():
         return render_template('predictYT.html', results=results, count_pos=count_pos, count_neg=count_neg)
     else:
         return render_template('predictYT.html')
+    
+if __name__ == '__main__':
+    app.run()
